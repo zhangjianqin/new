@@ -5,6 +5,7 @@ import android.view.View;
 import com.controller.AbstractActivity;
 
 public class StartActivity extends AbstractActivity {
+    
 
 	@Override
 	public void onClick(View arg0) {
@@ -21,7 +22,7 @@ public class StartActivity extends AbstractActivity {
 	@Override
 	protected void beforInjectViews() {
 		// TODO Auto-generated method stub
-
+        Thread thread;
 	}
 
 	@Override
