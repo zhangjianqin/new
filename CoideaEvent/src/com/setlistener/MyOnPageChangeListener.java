@@ -4,55 +4,55 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 /**
- * “≥ø®«–ªªº‡Ã˝
+ * È°µÂç°ÂàáÊç¢ÁõëÂê¨
  */
 public class MyOnPageChangeListener implements OnPageChangeListener {
 
-	private int offset = 0;// ∂Øª≠Õº∆¨∆´“∆¡ø
-	private int currIndex = 0;// µ±«∞“≥ø®±‡∫≈
-	private int bmpW;// ∂Øª≠Õº∆¨øÌ∂»
+     private int offset = 0;// Âä®ÁîªÂõæÁâáÂÅèÁßªÈáè
+     private int currIndex = 0;// ÂΩìÂâçÈ°µÂç°ÁºñÂè∑
+     private int bmpW;// Âä®ÁîªÂõæÁâáÂÆΩÂ∫¶
 
-	Animation animation = null;
-	int one = offset * 2 + bmpW;// “≥ø®1 -> “≥ø®2 ∆´“∆¡ø
-	int two = one * 2;// “≥ø®1 -> “≥ø®3 ∆´“∆¡ø
+     Animation animation = null;
+     int one = offset * 2 + bmpW;// È°µÂç°1 -> È°µÂç°2 ÂÅèÁßªÈáè
+     int two = one * 2;// È°µÂç°1 -> È°µÂç°3 ÂÅèÁßªÈáè
 
-	@Override
-	public void onPageSelected(int arg0) {
-		// TODO Auto-generated method stub
-		switch (arg0) {
-		case 0:
-			if (currIndex == 1) {
-				animation = new TranslateAnimation(one, 0, 0, 0);
-			} else if (currIndex == 2) {
-				animation = new TranslateAnimation(two, 0, 0, 0);
-			}
-			break;
-		case 1:
-			if (currIndex == 0) {
-				animation = new TranslateAnimation(offset, one, 0, 0);
-			} else if (currIndex == 2) {
-				animation = new TranslateAnimation(two, one, 0, 0);
-			}
-			break;
-		case 2:
-			if (currIndex == 0) {
-				animation = new TranslateAnimation(offset, two, 0, 0);
-			} else if (currIndex == 1) {
-				animation = new TranslateAnimation(one, two, 0, 0);
-			}
-			break;
+     @Override
+     public void onPageSelected(int arg0) {
+          // TODO Auto-generated method stub
+          switch (arg0) {
+          case 0:
+               if (currIndex == 1) {
+                    animation = new TranslateAnimation(one, 0, 0, 0);
+               } else if (currIndex == 2) {
+                    animation = new TranslateAnimation(two, 0, 0, 0);
+               }
+               break;
+          case 1:
+               if (currIndex == 0) {
+                    animation = new TranslateAnimation(offset, one, 0, 0);
+               } else if (currIndex == 2) {
+                    animation = new TranslateAnimation(two, one, 0, 0);
+               }
+               break;
+          case 2:
+               if (currIndex == 0) {
+                    animation = new TranslateAnimation(offset, two, 0, 0);
+               } else if (currIndex == 1) {
+                    animation = new TranslateAnimation(one, two, 0, 0);
+               }
+               break;
 
-		}
-		currIndex = arg0;
-	}
+          }
+          currIndex = arg0;
+     }
 
-	@Override
-	public void onPageScrolled(int arg0, float arg1, int arg2) {
-	}
+     @Override
+     public void onPageScrolled(int arg0, float arg1, int arg2) {
+     }
 
-	@Override
-	public void onPageScrollStateChanged(int arg0) {
-	}
+     @Override
+     public void onPageScrollStateChanged(int arg0) {
+     }
 
 
-}
+}     

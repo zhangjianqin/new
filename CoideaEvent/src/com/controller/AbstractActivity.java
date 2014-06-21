@@ -19,214 +19,214 @@ import android.view.Window;
 import android.view.WindowManager;
 
 /**
- * Activity»ùÀà
- * 
- * Í¨¹ıannotation×Ô¶¯³õÊ¼»¯View
- * 
- * ÆÁ±ÎonBackPressed(×ÓÀà¿ÉÍ¨¹ıÖØĞ´ÖØĞÂÊµÏÖ)
- * 
+ * ActivityåŸºç±»
+ *
+ * é€šè¿‡annotationè‡ªåŠ¨åˆå§‹åŒ–View
+ *
+ * å±è”½onBackPressed(å­ç±»å¯é€šè¿‡é‡å†™é‡æ–°å®ç°)
+ *
  * @author dingxiaoyu
  */
 public abstract class AbstractActivity extends Activity implements OnClickListener {
 
-	/** ´Ë·½·¨ÔÚ×¢ÈëViewÖ®ºóµ÷ÓÃ */
-	protected abstract void afterInjectViews();
+     /** æ­¤æ–¹æ³•åœ¨æ³¨å…¥Viewä¹‹åè°ƒç”¨ */
+     protected abstract void afterInjectViews();
 
-	/** ´Ë·½·¨ÔÚ×¢ÈëViewÖ®Ç°µ÷ÓÃ ÓÃÓÚµ±Ç°Activity¶ÀÁ¢¹¦ÄÜµÄ³õÊ¼»¯ */
-	protected abstract void beforInjectViews();
+     /** æ­¤æ–¹æ³•åœ¨æ³¨å…¥Viewä¹‹å‰è°ƒç”¨ ç”¨äºå½“å‰Activityç‹¬ç«‹åŠŸèƒ½çš„åˆå§‹åŒ– */
+     protected abstract void beforInjectViews();
 
-	/** ·µ»Øµ±Ç°ActivityÊµÀı */
-	protected abstract AbstractActivity getThis();
+     /** è¿”å›å½“å‰Activityå®ä¾‹ */
+     protected abstract AbstractActivity getThis();
 
-	/** ·µ»Øµ±Ç°Activity¶ÔÓ¦µÄXML×ÊÔ´ */
-	protected abstract int getResId();
+     /** è¿”å›å½“å‰Activityå¯¹åº”çš„XMLèµ„æº */
+     protected abstract int getResId();
 
-	private AppManager appManager;
+     private AppManager appManager;
 
-	public MyApplication eApp;
+     public MyApplication eApp;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		initial();
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+          initial();
 
-		beforInjectViews();
+          beforInjectViews();
 
-		getThis().setContentView(getResId());
+          getThis().setContentView(getResId());
 
-		injectViews();
+          injectViews();
 
-		injectOnClick();
+          injectOnClick();
 
-		afterInjectViews();
+          afterInjectViews();
 
-		super.onCreate(savedInstanceState);
-	}
+          super.onCreate(savedInstanceState);
+     }
 
-	@Override
-	public void onBackPressed() {
-		//
-	}
+     @Override
+     public void onBackPressed() {
+          //
+     }
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		// activity¹Ø±Õ£¬´ÓÕ»ÖĞÒÆ³ı
-		appManager.finishActivity(getThis());
-	}
+     @Override
+     protected void onDestroy() {
+          super.onDestroy();
+          // activityå…³é—­ï¼Œä»æ ˆä¸­ç§»é™¤
+          appManager.finishActivity(getThis());
+     }
 
-	/**
-	 * ²¶×¥·µ»Ø°´Å¥,¶¨ÒåÍË³öÓ¦ÓÃ·½·¨²¢Ïú»ÙËùÓĞActivity
-	 */
-	public boolean onKeyDown(int keycode, KeyEvent keyEvent) {
-		if (keycode == KeyEvent.KEYCODE_BACK) {
-			new AlertDialog.Builder(this).setTitle("ÕæµÄÒªÍË³öÓ¦ÓÃ£¿").setMessage("ÄãÈ·¶¨ÒªÍË³ö±¾Ó¦ÓÃ?").setPositiveButton("È·¶¨", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-					appManager.AppExit(getApplicationContext());
-				}
-			}).setNegativeButton("È¡Ïû", new DialogInterface.OnClickListener() {
-				public void onClick(DialogInterface dialog, int which) {
-				}
-			}).show();
-		}
-		return true;
-	}
+     /**
+      * æ•æŠ“è¿”å›æŒ‰é’®,å®šä¹‰é€€å‡ºåº”ç”¨æ–¹æ³•å¹¶é”€æ¯æ‰€æœ‰Activity
+      */
+     public boolean onKeyDown(int keycode, KeyEvent keyEvent) {
+          if (keycode == KeyEvent.KEYCODE_BACK) {
+               new AlertDialog.Builder(this).setTitle("çœŸçš„è¦é€€å‡ºåº”ç”¨ï¼Ÿ").setMessage("ä½ ç¡®å®šè¦é€€å‡ºæœ¬åº”ç”¨?").setPositiveButton("ç¡®å®š", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                         appManager.AppExit(getApplicationContext());
+                    }
+               }).setNegativeButton("å–æ¶ˆ", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+               }).show();
+          }
+          return true;
+     }
 
-	protected String tag() {
-		if (getThis() == null) {
-			throw new RuntimeException("no implements method \"getThis()\"");
-		}
-		return getThis().getClass().getSimpleName().toString();
-	};
+     protected String tag() {
+          if (getThis() == null) {
+               throw new RuntimeException("no implements method \"getThis()\"");
+          }
+          return getThis().getClass().getSimpleName().toString();
+     };
 
-	/** Activity¹«ÓÃ³õÊ¼»¯ */
-	private void initial() {
-		// ³õÊ¼»¯Ó¦ÓÃ¹ÜÀíÆ÷
-		appManager = AppManager.getAppManager();
-		// °Ñµ±Ç°activity¼ÓÈëÕ»ÖĞ
-		appManager.addActivity(getThis());
-		// »ñÈ¡ApplicationÊµÀı
-		eApp = (MyApplication) this.getApplication();
-//		// È¥µô±êÌâÀ¸
-//		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//		// È¥µôĞÅÏ¢À¸
-//		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-//		// ÉèÖÃÒ³ÃæºáÏò
-//		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-//		// ÉèÖÃÈí¼üÅÌ
-//		this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-	}
+     /** Activityå…¬ç”¨åˆå§‹åŒ– */
+     private void initial() {
+          // åˆå§‹åŒ–åº”ç”¨ç®¡ç†å™¨
+          appManager = AppManager.getAppManager();
+          // æŠŠå½“å‰activityåŠ å…¥æ ˆä¸­
+          appManager.addActivity(getThis());
+          // è·å–Applicationå®ä¾‹
+          eApp = (MyApplication) this.getApplication();
+//          // å»æ‰æ ‡é¢˜æ 
+//          this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//          // å»æ‰ä¿¡æ¯æ 
+//          this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//          // è®¾ç½®é¡µé¢æ¨ªå‘
+//          this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//          // è®¾ç½®è½¯é”®ç›˜
+//          this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+     }
 
-	/** View×¢Èë */
-	private void injectViews() {
-		Class<?> instanceClass = getThis().getClass();
-		Class<?> idClass = null;
-		try {
-			idClass = Class.forName(getPackageName() + ".R$id");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		Field[] allFields = instanceClass.getDeclaredFields();
-		for (Field field : allFields) {
-			// findViewById
-			if (field.isAnnotationPresent(FindViewById.class)) {
-				FindViewById annotation = field.getAnnotation(FindViewById.class);
-				int aValue = annotation.value();
-				if (aValue == -1) {
-					try {
-						aValue = idClass.getField(field.getName()).getInt(getThis());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				field.setAccessible(true);
-				try {
-					field.set(getThis(), getThis().findViewById(aValue));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+     /** Viewæ³¨å…¥ */
+     private void injectViews() {
+          Class<?> instanceClass = getThis().getClass();
+          Class<?> idClass = null;
+          try {
+               idClass = Class.forName(getPackageName() + ".R$id");
+          } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+          }
+          Field[] allFields = instanceClass.getDeclaredFields();
+          for (Field field : allFields) {
+               // findViewById
+               if (field.isAnnotationPresent(FindViewById.class)) {
+                    FindViewById annotation = field.getAnnotation(FindViewById.class);
+                    int aValue = annotation.value();
+                    if (aValue == -1) {
+                         try {
+                              aValue = idClass.getField(field.getName()).getInt(getThis());
+                         } catch (Exception e) {
+                              e.printStackTrace();
+                         }
+                    }
+                    field.setAccessible(true);
+                    try {
+                         field.set(getThis(), getThis().findViewById(aValue));
+                    } catch (Exception e) {
+                         e.printStackTrace();
+                    }
+               }
+          }
+     }
 
-	/** OnClick×¢Èë */
-	private void injectOnClick() {
-		Class<?> instanceClass = getThis().getClass();
-		Field[] allFields = instanceClass.getDeclaredFields();
-		for (Field field : allFields) {
-			// setOnClickListener
-			if (field.isAnnotationPresent(SetOnClick.class)) {
-				SetOnClick annotation = field.getAnnotation(SetOnClick.class);
-				boolean need = annotation.value();
-				if (need) {
-					try {
-						Method method = View.class.getMethod("setOnClickListener", OnClickListener.class);
-						field.setAccessible(true);
-						method.invoke(field.get(getThis()), getThis());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
+     /** OnClickæ³¨å…¥ */
+     private void injectOnClick() {
+          Class<?> instanceClass = getThis().getClass();
+          Field[] allFields = instanceClass.getDeclaredFields();
+          for (Field field : allFields) {
+               // setOnClickListener
+               if (field.isAnnotationPresent(SetOnClick.class)) {
+                    SetOnClick annotation = field.getAnnotation(SetOnClick.class);
+                    boolean need = annotation.value();
+                    if (need) {
+                         try {
+                              Method method = View.class.getMethod("setOnClickListener", OnClickListener.class);
+                              field.setAccessible(true);
+                              method.invoke(field.get(getThis()), getThis());
+                         } catch (Exception e) {
+                              e.printStackTrace();
+                         }
+                    }
+               }
+          }
+     }
 
-	/** HolderView ×¢Èë */
-	protected void injectHolderViews(View convertView, Object viewHolder) {
-		Class<?> instanceClass = viewHolder.getClass();
-		Class<?> idClass = null;
-		try {
-			idClass = Class.forName(getPackageName() + ".R$id");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		Field[] allFields = instanceClass.getDeclaredFields();
-		for (Field field : allFields) {
-			// findViewById
-			if (field.isAnnotationPresent(FindViewById.class)) {
-				FindViewById annotation = field.getAnnotation(FindViewById.class);
-				int aValue = annotation.value();
-				if (aValue == -1) {
-					try {
-						aValue = idClass.getField(field.getName()).getInt(getThis());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-				field.setAccessible(true);
-				try {
-					field.set(viewHolder, convertView.findViewById(aValue));
-					System.out.println("pause");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+     /** HolderView æ³¨å…¥ */
+     protected void injectHolderViews(View convertView, Object viewHolder) {
+          Class<?> instanceClass = viewHolder.getClass();
+          Class<?> idClass = null;
+          try {
+               idClass = Class.forName(getPackageName() + ".R$id");
+          } catch (ClassNotFoundException e) {
+               e.printStackTrace();
+          }
+          Field[] allFields = instanceClass.getDeclaredFields();
+          for (Field field : allFields) {
+               // findViewById
+               if (field.isAnnotationPresent(FindViewById.class)) {
+                    FindViewById annotation = field.getAnnotation(FindViewById.class);
+                    int aValue = annotation.value();
+                    if (aValue == -1) {
+                         try {
+                              aValue = idClass.getField(field.getName()).getInt(getThis());
+                         } catch (Exception e) {
+                              e.printStackTrace();
+                         }
+                    }
+                    field.setAccessible(true);
+                    try {
+                         field.set(viewHolder, convertView.findViewById(aValue));
+                         System.out.println("pause");
+                    } catch (Exception e) {
+                         e.printStackTrace();
+                    }
+               }
+          }
+     }
 
-	/** HodlerOnClick×¢Èë */
-	protected void injectHolderOnClick(Object viewHolder, final int position, final ViewHolder.OnClickListener listener) {
-		Class<?> instanceClass = viewHolder.getClass();
-		Field[] allFields = instanceClass.getDeclaredFields();
-		for (Field field : allFields) {
-			if (field.isAnnotationPresent(SetOnClick.class)) {
-				SetOnClick annotation = field.getAnnotation(SetOnClick.class);
-				boolean need = annotation.value();
-				if (need) {
-					try {
-						Method method = View.class.getMethod("setOnClickListener", View.OnClickListener.class);
-						field.setAccessible(true);
-						method.invoke(field.get(viewHolder), new View.OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								listener.onClick(v, position);
-							}
-						});
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-	}
+     /** HodlerOnClickæ³¨å…¥ */
+     protected void injectHolderOnClick(Object viewHolder, final int position, final ViewHolder.OnClickListener listener) {
+          Class<?> instanceClass = viewHolder.getClass();
+          Field[] allFields = instanceClass.getDeclaredFields();
+          for (Field field : allFields) {
+               if (field.isAnnotationPresent(SetOnClick.class)) {
+                    SetOnClick annotation = field.getAnnotation(SetOnClick.class);
+                    boolean need = annotation.value();
+                    if (need) {
+                         try {
+                              Method method = View.class.getMethod("setOnClickListener", View.OnClickListener.class);
+                              field.setAccessible(true);
+                              method.invoke(field.get(viewHolder), new View.OnClickListener() {
+                                   @Override
+                                   public void onClick(View v) {
+                                        listener.onClick(v, position);
+                                   }
+                              });
+                         } catch (Exception e) {
+                              e.printStackTrace();
+                         }
+                    }
+               }
+          }
+     }
 
 }

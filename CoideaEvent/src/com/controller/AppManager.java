@@ -7,109 +7,109 @@ import android.content.Context;
 import android.os.Process;
 
 /**
- * Ó¦ÓÃ³ÌĞòActivity¹ÜÀíÀà£ºÓÃÓÚActivity¹ÜÀíºÍÓ¦ÓÃ³ÌĞòÍË³ö
+ * åº”ç”¨ç¨‹åºActivityç®¡ç†ç±»ï¼šç”¨äºActivityç®¡ç†å’Œåº”ç”¨ç¨‹åºé€€å‡º
  */
 public class AppManager {
 
-	private static Stack<Activity> activityStack;
-	private static AppManager instance;
+     private static Stack<Activity> activityStack;
+     private static AppManager instance;
 
-	private AppManager() {
-	}
+     private AppManager() {
+     }
 
-	/**
-	 * µ¥Ò»ÊµÀı
-	 */
-	public static AppManager getAppManager() {
-		if (instance == null) {
-			instance = new AppManager();
-		}
-		return instance;
-	}
+     /**
+      * å•ä¸€å®ä¾‹
+      */
+     public static AppManager getAppManager() {
+          if (instance == null) {
+               instance = new AppManager();
+          }
+          return instance;
+     }
 
-	/**
-	 * Ìí¼ÓActivityµ½¶ÑÕ»
-	 */
-	public void getSize(String name) {
-		System.out.println("---" + name + "--" + activityStack.size());
-	}
+     /**
+      * æ·»åŠ Activityåˆ°å †æ ˆ
+      */
+     public void getSize(String name) {
+          System.out.println("---" + name + "--" + activityStack.size());
+     }
 
-	/**
-	 * Ìí¼ÓActivityµ½¶ÑÕ»
-	 */
-	public void addActivity(Activity activity) {
-		if (activityStack == null) {
-			activityStack = new Stack<Activity>();
-		}
-		activityStack.add(activity);
-	}
+     /**
+      * æ·»åŠ Activityåˆ°å †æ ˆ
+      */
+     public void addActivity(Activity activity) {
+          if (activityStack == null) {
+               activityStack = new Stack<Activity>();
+          }
+          activityStack.add(activity);
+     }
 
-	/**
-	 * »ñÈ¡µ±Ç°Activity£¨¶ÑÕ»ÖĞ×îºóÒ»¸öÑ¹ÈëµÄ£©
-	 */
-	public Activity currentActivity() {
-		Activity activity = activityStack.lastElement();
-		return activity;
-	}
+     /**
+      * è·å–å½“å‰Activityï¼ˆå †æ ˆä¸­æœ€åä¸€ä¸ªå‹å…¥çš„ï¼‰
+      */
+     public Activity currentActivity() {
+          Activity activity = activityStack.lastElement();
+          return activity;
+     }
 
-	/**
-	 * ½áÊøµ±Ç°Activity£¨¶ÑÕ»ÖĞ×îºóÒ»¸öÑ¹ÈëµÄ£©
-	 */
-	public void finishActivity() {
-		Activity activity = activityStack.lastElement();
-		finishActivity(activity);
-	}
+     /**
+      * ç»“æŸå½“å‰Activityï¼ˆå †æ ˆä¸­æœ€åä¸€ä¸ªå‹å…¥çš„ï¼‰
+      */
+     public void finishActivity() {
+          Activity activity = activityStack.lastElement();
+          finishActivity(activity);
+     }
 
-	/**
-	 * ½áÊøÖ¸¶¨µÄActivity
-	 */
-	public void finishActivity(Activity activity) {
-		if (activity != null) {
-			activityStack.remove(activity);
-			activity.finish();
-			activity = null;
-		}
-	}
+     /**
+      * ç»“æŸæŒ‡å®šçš„Activity
+      */
+     public void finishActivity(Activity activity) {
+          if (activity != null) {
+               activityStack.remove(activity);
+               activity.finish();
+               activity = null;
+          }
+     }
 
-	/**
-	 * ½áÊøÖ¸¶¨ÀàÃûµÄActivity
-	 */
-	public void finishActivity(Class<?> cls) {
-		Stack<Activity> activitys = new Stack<Activity>();
-		for (Activity activity : activityStack) {
-			if (activity.getClass().equals(cls)) {
-				activitys.add(activity);
-			}
-		}
+     /**
+      * ç»“æŸæŒ‡å®šç±»åçš„Activity
+      */
+     public void finishActivity(Class<?> cls) {
+          Stack<Activity> activitys = new Stack<Activity>();
+          for (Activity activity : activityStack) {
+               if (activity.getClass().equals(cls)) {
+                    activitys.add(activity);
+               }
+          }
 
-		for (Activity activity : activitys) {
-			finishActivity(activity);
-		}
-	}
+          for (Activity activity : activitys) {
+               finishActivity(activity);
+          }
+     }
 
-	/**
-	 * ½áÊøËùÓĞActivity
-	 */
-	public void finishAllActivity() {
-		for (int i = 0, size = activityStack.size(); i < size; i++) {
-			if (null != activityStack.get(i)) {
-				activityStack.get(i).finish();
-			}
-		}
-		activityStack.clear();
-	}
+     /**
+      * ç»“æŸæ‰€æœ‰Activity
+      */
+     public void finishAllActivity() {
+          for (int i = 0, size = activityStack.size(); i < size; i++) {
+               if (null != activityStack.get(i)) {
+                    activityStack.get(i).finish();
+               }
+          }
+          activityStack.clear();
+     }
 
-	/**
-	 * ÍË³öÓ¦ÓÃ³ÌĞò
-	 */
-	public void AppExit(Context context) {
-		try {
-			finishAllActivity();
-			int pid = Process.myPid();
-			Process.killProcess(pid);
-			System.exit(0);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+     /**
+      * é€€å‡ºåº”ç”¨ç¨‹åº
+      */
+     public void AppExit(Context context) {
+          try {
+               finishAllActivity();
+               int pid = Process.myPid();
+               Process.killProcess(pid);
+               System.exit(0);
+          } catch (Exception e) {
+               e.printStackTrace();
+          }
+     }
 }

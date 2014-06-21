@@ -56,9 +56,9 @@ public class ProjectAdapter extends SimpleAdapter {
 
 	class ViewHolder {
 
-		TextView tv_title;// 标题
-		TextView tv_date;// 时间
-		ImageView image_detail;// 图片
+		TextView tv_title;// 鏍囬
+		TextView tv_date;// 鏃堕棿
+		ImageView image_detail;// 鍥剧墖
 
 	}
 }
