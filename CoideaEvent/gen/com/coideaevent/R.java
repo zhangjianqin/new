@@ -515,8 +515,9 @@ public final class R {
         public static final int projectlist_item=0x7f030009;
         public static final int residemenu=0x7f03000a;
         public static final int residemenu_item=0x7f03000b;
-        public static final int start=0x7f03000c;
-        public static final int title=0x7f03000d;
+        public static final int sharecreative=0x7f03000c;
+        public static final int start=0x7f03000d;
+        public static final int title=0x7f03000e;
     }
     public static final class menu {
         public static final int activity_main=0x7f070000;

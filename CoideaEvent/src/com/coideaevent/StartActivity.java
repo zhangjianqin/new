@@ -22,7 +22,13 @@ public class StartActivity extends AbstractActivity {
 	@Override
 	protected void beforInjectViews() {
 		// TODO Auto-generated method stub
-        Thread thread;
+        Thread thread = new Thread(new Runnable() {
+        	
+			public void run() {
+				
+			}
+		});
+        thread.start();
 	}
 
 	@Override
